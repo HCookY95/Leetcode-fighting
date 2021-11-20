@@ -7,3 +7,5 @@ class Solution:
             else:
                 start +=1
         return start
+
+# According to the length returned, print out all elements in this length
