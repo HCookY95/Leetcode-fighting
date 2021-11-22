@@ -1,0 +1,19 @@
+class Solution:
+    def compress(self, chars: List[str]) -> int:
+        count = 1
+        n = len(chars)
+        write = 0
+        
+        for i in range(n):
+            if i == n - 1 or chars[i] != chars[i + 1] :
+                chars[write] = chars[i]
+                write += 1
+                if count > 1:
+                    for k in str(count):
+                        chars[write] = k
+                        write += 1 
+                count = 1
+            else:
+                count += 1
+        return write
+                
