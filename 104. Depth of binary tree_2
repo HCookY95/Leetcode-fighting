@@ -1,0 +1,21 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        depth = 0
+        level = [root] if root else []
+        
+        while level:
+            queue = []
+            depth += 1
+            for element in level:
+                if element.left:
+                    queue.append(element.left)
+                if element.right:
+                    queue.append(element.right)
+                level = queue
+        return depth
