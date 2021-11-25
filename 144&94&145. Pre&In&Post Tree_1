@@ -1,0 +1,29 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
+        white = 0
+        gray = 1
+        res = []
+        stack = [(white, root)]
+        
+        while stack:
+            color, node = stack.pop()
+            if not node:
+                continue
+            
+            if color == white:
+                 stack.append((white, node.right))
+                 stack.append((white, node.left))
+                 stack.append((gray, node))
+            
+            if color == gray:
+                res.append(node.val)
+
+        return res
+        
+# Work for all three orders, only need to change the order of stack.append
