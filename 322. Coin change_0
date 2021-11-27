@@ -1,0 +1,22 @@
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        from collections import deque
+        
+        queue = deque([amount])
+        visited = set()
+        step = 0
+        
+        while queue:
+            n = len(queue)
+            
+            for i in range (n):
+                tmp = queue.pop()
+                if tmp == 0:
+                    return step
+                for coin in coins:
+                    if tmp - coin >= 0 and tmp - coin not in visited:
+                        visited.add(tmp - coin)
+                        queue.appendleft(tmp - coin)
+            step += 1
+        
+        return -1
