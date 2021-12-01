@@ -1,0 +1,26 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    
+    def __init__(self):
+        self.deduction = float('inf')
+        self.value = 0
+        
+    def closestValue(self, root, target):
+        from numpy import abs
+        
+        if root:
+            if abs(root.val - target) < self.deduction:
+                self.deduction = abs(root.val - target)
+                self.value = root.val
+                
+            if root.val > target:
+                self.closestValue(root.left, target)
+            if root.val < target:
+                self.closestValue(root.right, target)
+                
+        return self.value
