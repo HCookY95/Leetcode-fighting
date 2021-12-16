@@ -1,0 +1,15 @@
+class Solution:
+    def isPossibleDivide(self, nums: List[int], k: int) -> bool:
+        from collections import Counter
+        count = Counter(nums)
+        s = sorted(count)
+        
+        for num in s:
+            occ = count[num]
+            if occ > 0:
+                for i in range(num + 1, num + k):
+                    if count[i] >= occ:
+                        count[i] -= occ
+                    else:
+                        return False
+        return True
