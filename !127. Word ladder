@@ -1,0 +1,51 @@
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        distance = 0
+        queue = collections.deque([beginWord])
+        visited = set([beginWord])
+        
+        while queue:
+            distance += 1
+            for _ in range(len(queue)):
+                word = queue.popleft()
+                if word == endWord:
+                    return distance
+                for next_word in self.next_words(word, wordList):
+                    if next_word in visited:
+                        continue
+                    queue.append(next_word)
+                    visited.add(next_word)
+        
+        return 0
+    
+    ##############################################
+    def next_words(self, word, wordList):
+        next_words = []
+        
+        for i in range(len(word)):
+            left_char = word[:i]
+            right_char = word[i + 1:]
+            for char in 'qwertyuiopasdfghjklzxcvbnm':
+                if word[i] == char:
+                    continue
+                next_word = left_char + char + right_char
+                if next_word in wordList:
+                    next_words.append(next_word)
+        return next_words
+      ################################################ 
+          def get_next_words(self, word, dict):
+        next_words = []
+        for next_word in dict:
+            has_one_diff = False
+            for i in range(len(word)):
+                if (next_word[i] != word[i]):
+                    if has_one_diff:
+                        has_one_diff = False
+                        break
+                    has_one_diff = True
+            if has_one_diff:
+                next_words.append(next_word)
+        return next_words
+      ################################################
+      
+### All Time complexity exceed        
