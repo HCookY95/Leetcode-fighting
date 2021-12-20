@@ -1,0 +1,44 @@
+class Solution(object):
+    def shortestBridge(self, A: List[List[int]]) -> int:    
+        row = len(A)
+        col = len(A[0])
+        direction = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        q = collections.deque(())
+        visited = set(())
+        
+        for i in range(row):
+            for j in range(col):
+                if A[i][j] == 1:
+                    q.append((i, j))
+                    visited.add((i, j))
+                    while q:
+                        cur_r, cur_c = q.popleft()
+                        for dr, dc in direction:
+                            if (
+                                cur_r + dr in range(row) and
+                                cur_c + dc in range(col) and
+                                A[cur_r + dr][cur_c + dc] == 1 and
+                                (cur_r + dr, cur_c + dc) not in visited
+                                ):
+                                q.append((cur_r + dr, cur_c + dc))
+                                visited.add((cur_r + dr, cur_c + dc))
+                    
+                    q = collections.deque(visited)
+                    distance = 0
+                    
+                    while q:
+                        for _ in range(len(q)):
+                            cur_row, cur_col = q.popleft()
+                            
+                            if A[cur_row][cur_col] == 1 and distance > 0:
+                                return distance - 1
+                            
+                            for drow, dcol in direction:
+                                if (
+                                    cur_row + drow in range(row) and
+                                    cur_col + dcol in range(col) and
+                                    (cur_row + drow, cur_col + dcol) not in visited
+                                    ):
+                                    q.append((cur_row + drow, cur_col + dcol))
+                                    visited.add((cur_row + drow, cur_col + dcol))
+                        distance += 1
