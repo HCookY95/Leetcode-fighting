@@ -1,0 +1,10 @@
+class Solution:
+    def maxChunksToSorted(self, arr: List[int]) -> int:
+        chunk = 0
+        pointer = 0
+        
+        for i, x in enumerate(arr):
+            pointer = max(x, pointer)
+            if pointer == i:
+                chunk += 1
+        return chunk
