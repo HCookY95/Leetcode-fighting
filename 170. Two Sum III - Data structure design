@@ -1,0 +1,27 @@
+class TwoSum:
+
+    def __init__(self):
+        self.create = []
+    
+    def add(self, number: int) -> None:
+        self.create.append(number)
+
+    def find(self, value: int) -> bool:
+        slow = 0
+        fast = len(self.create) - 1
+        self.create.sort()
+        
+        while slow < fast:
+            if self.create[slow] + self.create[fast] < value:
+                slow += 1
+            elif self.create[slow] + self.create[fast] > value:
+                fast -= 1
+            else:
+                return True
+        return False
+
+
+# Your TwoSum object will be instantiated and called as such:
+# obj = TwoSum()
+# obj.add(number)
+# param_2 = obj.find(value)
