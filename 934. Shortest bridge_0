@@ -4,23 +4,6 @@ class Solution:
         col = len(grid[0])
         q = collections.deque(())
         visited = set(())
-        
-        for i in range(row):
-            for j in range(col):
-                if grid[i][j] == 1 and (i, j) not in visited:
-                    q.append((i, j))
-                    visited.add((i, j))
-                    
-                    while q:
-                        r, c = q.popleft()
-                        for nbr, nbc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
-                            if (
-                                nbr in range(row) and nbc in range(col) and
-                                grid[nbr][nbc] == 1 and
-                                (nbr, nbc) not in visited
-                                ):
-                                q.append((nbr, nbc))
-                                visited.add((nbr, nbc))
 
         for i in range(row):
             for j in range(col):
