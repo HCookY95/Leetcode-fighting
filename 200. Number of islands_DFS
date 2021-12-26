@@ -8,15 +8,15 @@ class Solution:
         for i in range(len(grid)):
             for j in range(len(grid[0])):
                 if grid[i][j] == '1':
-                    self.dfs(grid, i, j)
+                    dfs(grid, i, j)
                     count += 1
         return count
     
-    def dfs(self, grid, i, j):
-        if i not in range(len(grid)) or j not in range(len(grid[0])) or grid[i][j] != '1':
-            return
-        
-        grid[i][j]= '#'
+        def dfs(grid, i, j):
+            if i not in range(len(grid)) or j not in range(len(grid[0])) or grid[i][j] != '1':
+                return
+
+            grid[i][j]= '#'
         
         self.dfs(grid, i + 1, j)
         self.dfs(grid, i - 1, j)
