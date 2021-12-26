@@ -1,0 +1,43 @@
+class Solution:
+    def shortestBridge(self, grid: List[List[int]]) -> int:
+        row = len(grid)
+        col = len(grid[0])
+        island_1 = collections.deque(())
+        
+        def dfs(x, y):
+            for nbx, nby in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+                if (
+                    nbx in range(row) and nby in range(col) and
+                    grid[nbx][nby] == 1
+                    ):
+                    island_1.append((nbx, nby))
+                    grid[nbx][nby] = 2
+                    dfs(nbx, nby)
+                    
+        def find_island_1():
+            for i in range(row):
+                for j in range(col):
+                    if grid[i][j] == 1:
+                        island_1.append((i, j))
+                        grid[i][j] = 2
+                        return dfs(i, j)
+        
+        find_island_1()
+        
+        step = 0
+        
+        while island_1:
+            for _ in range(len(island_1)):
+                r, c = island_1.popleft()
+                for nbr, nbc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
+                    if (
+                        nbr in range(row) and nbc in range(col) and
+                        grid[nbr][nbc] != 2
+                        ):
+                        if grid[nbr][nbc] == 0:
+                            grid[nbr][nbc] = 2
+                            island_1.append((nbr, nbc))
+                        
+                        elif grid[nbr][nbc] == 1:
+                            return step
+            step += 1
