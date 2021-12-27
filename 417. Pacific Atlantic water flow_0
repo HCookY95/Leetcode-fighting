@@ -1,0 +1,35 @@
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        row = len(heights)
+        col = len(heights[0])
+        pacific_q = collections.deque(())
+        atlantic_q = collections.deque(())
+        
+        for i in range(row):
+            pacific_q.append((i, 0))
+            atlantic_q.append((i, col - 1))
+        for j in range(col):
+            pacific_q.append((0, j))
+            atlantic_q.append((row - 1, j))
+        
+        def bfs(q):
+            visited = set(())
+            
+            while q:
+                r, c = q.popleft()
+                visited.add((r, c))
+                
+                for nbr, nbc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
+                    if (
+                        nbr in range(row) and nbc in range(col) and
+                        heights[nbr][nbc] >= heights[r][c] and
+                        (nbr, nbc) not in visited
+                        ): 
+                        q.append((nbr, nbc))
+                        visited.add((nbr, nbc))
+            return visited
+        
+        pacific_reachable = bfs(pacific_q)
+        atlantic_reachable = bfs(atlantic_q)
+        
+        return list(pacific_reachable.intersection(atlantic_reachable))
