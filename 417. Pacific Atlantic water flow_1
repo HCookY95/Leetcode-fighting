@@ -1,0 +1,27 @@
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        row = len(heights)
+        col = len(heights[0])
+        pacific_reachable = set()
+        atlantic_reachable = set()
+        
+        def dfs(i, j, reachable):
+            reachable.add((i, j))
+            
+            for nbi, nbj in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
+                if (
+                    nbi in range(row) and nbj in range(col) and
+                    heights[nbi][nbj] >= heights[i][j] and
+                    (nbi, nbj) not in reachable
+                    ):
+                    dfs(nbi, nbj, reachable)
+        
+        for i in range(row):
+            dfs(i, 0, pacific_reachable)
+            dfs(i, col - 1, atlantic_reachable)
+            
+        for j in range(col):
+            dfs(0, j, pacific_reachable)
+            dfs(row - 1, j, atlantic_reachable)
+        
+        return list(pacific_reachable.intersection(atlantic_reachable))
