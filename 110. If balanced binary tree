@@ -1,0 +1,26 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        def divideConquer(root):
+            if not root:
+                return True, 0
+            
+            left_balanced, left_height = divideConquer(root.left)
+            right_balanced, right_height = divideConquer(root.right)
+            root_height = max(left_height, right_height) + 1
+            
+            if not left_balanced or not right_balanced:
+                return False, root_height
+            
+            if abs(left_height - right_height) > 1:
+                return False, root_height
+            
+            return True, root_height
+        
+        is_balanced, _ = divideConquer(root)
+        return is_balanced
