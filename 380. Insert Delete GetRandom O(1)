@@ -19,3 +19,4 @@ class RandomizedSet:
     
 
     def getRandom(self) -> int:
+        return random.choice(self.q)
